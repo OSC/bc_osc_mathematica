@@ -2,21 +2,7 @@
 VERSION=13.2.1
 
 module purge
-module load mathematica/$VERSION project/classroom 
-
-export OSC_CLASS_ID="<%= context.classroom %>"
-export OSC_PROJECT_ID="<%= context.account %>"
-
-CLASS_DIR="$HOME/osc_classes/${OSC_CLASS_ID:-osc_class}"
-
-# Copy over classroom materials if the env variable exists
-if [[ -n "$OSC_CLASS_FILES" ]]; then
-  set -x  
-  mkdir -p "$CLASS_DIR"
-  touch "$CLASS_DIR/0_${OSC_CLASS_ID:-osc_class}.md"
-  rsync -avz --ignore-existing "$OSC_CLASS_FILES" "$CLASS_DIR"
-  { set +x; } 2>/dev/null
-fi
+module load mathematica/$VERSION
 
 # debug
 module list

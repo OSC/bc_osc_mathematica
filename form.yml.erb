@@ -4,9 +4,7 @@ cluster:
   - "kubernetes-test"
   - "kubernetes-dev"
 form:
-  - classroom
   - account
-  - bc_num_hours
   - compute_cluster
   - time
   - size
@@ -15,17 +13,17 @@ attributes:
     widget: "hidden_field"
     value: "standard"
   account:
-    widget: "hidden_field"
-    value: "PZS1118"
-  bc_num_hours:
-    label: "Hours"
-    value: "1"
+    widget: "select"
+    options:
+      - [
+        "PZS0714", "PZS0714",
+        ]
   compute_cluster:
-    widget: "hidden_field"
-    value: "pitzer"
+    widget: "select"
+    options:
+      - [
+        "pitzer", "pitzer"
+        ]
   time:
     widget: "hidden_field"
     value: "1.5"
-  classroom:
-    widget: 'hidden_field'
-    value: "R_DEMO"

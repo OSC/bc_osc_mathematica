@@ -1,26 +1,19 @@
 <%
-  err_msg = "You are not a part of any classroom project. Restarting your web \
-  server in the help menu may fix the issue. You may also have to wait if you've \
-  recently been added to the project. Reach out to your instructor or \
-  contact support through the help menu."
-
-  raise StandardError, err_msg  if classroom == 'no_classroom'
-
-  mounts = {
-    'home'    => OodSupport::User.new.home,
-    'support' => OodSupport::User.new('support').home,
-  }
-
   container_sizes = {
     'standard': {
+      'cpu': 1,
+      'memory': 4,
+    },
+    'test': {
       'cpu': 1,
       'memory': 2,
     },
   }
 
   apps_path = '/apps'
--%>
 
+  slurm_args = [ "--nodes 1", "--ntasks-per-node 4", "--mem 4096", "--cpus-per-task 1", "--time #{time}"]
+-%>
 ---
 batch_connect:
   template: "basic"
@@ -28,24 +21,6 @@ script:
   accounting_id: "<%= account %>"
   wall_time: "<%= time.to_f * 3600 %>"
   native:
-    container:
-      name: "mathematica"
-      image: "docker-registry.osc.edu/ondemand/ondemand-base-rhel7:latest"
-      image_pull_policy: "Always"
-      command: ["mathematica"]
-      restart_policy: 'OnFailure'
-      env:
-        KUBECONFIG: "/dev/null"
-      port: "8080"
-      cpu: "<%= container_sizes[size.to_sym][:cpu] %>"
-      memory: "<%= container_sizes[size.to_sym][:memory] %>"
-  node_select:
-    node-role.kubernetes.io/ondemand: ''
-  mounts:
-  <%- mounts.each do |name, mount| -%>
-    - type: host
-      name: <%= file %>
-      host_type: Dicrectory
-      path: "<%= apps_path %>/mathematica"
-      destination_path: "<%= apps_path %>"
+  <%- slurm_args.each do |arg| -%>
+    - "<%= arg %>"
   <%- end -%>
