@@ -1,4 +1,4 @@
-<%
+<%-  
   container_sizes = {
     'standard': {
       'cpu': 1,
@@ -10,17 +10,14 @@
     },
   }
 
-  apps_path = '/apps'
-
-  slurm_args = [ "--nodes 1", "--ntasks-per-node 4", "--mem 4096", "--cpus-per-task 1", "--time #{time}"]
--%>
+  slurm_args = [ "--nodes", "1", "--ntasks-per-node", "4", "--mem", "4096", "--cpus-per-task", "1", "--time", "10" ]
+%>
 ---
 batch_connect:
-  template: "basic"
+  template: vnc
 script:
   accounting_id: "<%= account %>"
-  wall_time: "<%= time.to_f * 3600 %>"
   native:
-  <%- slurm_args.each do |arg| -%>
+  <%- slurm_args.each do |arg| %>
     - "<%= arg %>"
-  <%- end -%>
+  <%- end %>
