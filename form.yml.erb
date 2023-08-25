@@ -1,3 +1,9 @@
+<%-
+  groups = OodSupport::User.new.groups.sort_by(&:id).tap { |groups|
+    groups.unshift(groups.delete(OodSupport::Process.group))
+  }.map(&:name).grep(/^P./)
+-%>
+
 ---
 cluster:
   - "pitzer"
@@ -5,23 +11,23 @@ form:
   - account
   - compute_cluster
   - time
-  - size
 attributes:
-  size:
-    widget: "hidden_field"
-    value: "standard"
   account:
+    label: "Project"
     widget: "select"
     options:
-      - [
-        "PZS0714", "PZS0714"
-        ]
+      <%- groups.each do |group|  %>
+      - "<%= group %>"
+      <%- end %>
   compute_cluster:
-    widget: "select"
+    widget: "hidden_field"
     options:
       - [
         "pitzer", "pitzer"
         ]
   time:
-    widget: "hidden_field"
-    value: "1.5"
+    widget: "number_field"
+    value: 1
+    min: 1
+    max: 8
+    
