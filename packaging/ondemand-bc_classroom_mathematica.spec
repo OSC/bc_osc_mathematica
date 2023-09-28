@@ -10,7 +10,7 @@
 Name:     ondemand-%{app_name}
 Version:  %{package_version}
 Release:  %{package_release}%{?dist}
-Summary:  Batch Connect - OSC Classroom Stable Diffusion
+Summary:  Batch Connect - OSC Mathematica
 
 Group:    System Environment/Daemons
 License:  MIT
@@ -24,7 +24,7 @@ Requires: ondemand
 AutoReqProv: no
 
 %description
-An interactive Stable Diffusion app meant to be used in classrooms at OSC.
+An interactive Mathematica app to be used at OSC.
 
 
 %prep
