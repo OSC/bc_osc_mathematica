@@ -1,7 +1,7 @@
 ---
 name: Mathematica
 category: Interactive Apps
-subcategory: Servers
+subcategory: GUIs
 role: batch_connect
 description: |
   This app will launch Mathematic for use in a classroom.
