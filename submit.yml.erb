@@ -1,10 +1,5 @@
 <%-  
 
-  hours = time.to_i*60
-  slurm_args = [ "--nodes", "1", "--ntasks-per-node", "1", "--mem", "4096", "--cpus-per-task", "1", "--time", "#{hours}" ]
-
-  nodes = bc_num_slots.blank? ? 1 : bc_num_slots.to_i
-
   cores_lookup = {
       "hugemem" => {"pitzer" => "80", "owens" => "48"},
       "largemem" => {"pitzer" => "48", "owens" => "28"},
