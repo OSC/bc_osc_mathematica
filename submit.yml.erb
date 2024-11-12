@@ -1,10 +1,5 @@
 <%-  
 
-  hours = time.to_i*60
-  slurm_args = [ "--nodes", "1", "--ntasks-per-node", "1", "--mem", "4096", "--cpus-per-task", "1", "--time", "#{hours}" ]
-
-  nodes = bc_num_slots.blank? ? 1 : bc_num_slots.to_i
-
   cores_lookup = {
       "hugemem" => {"pitzer" => "80", "owens" => "48"},
       "largemem" => {"pitzer" => "48", "owens" => "28"},
@@ -24,28 +19,29 @@
 
 
   case node_type
+  when "any"
+      slurm_args = [ "--ntasks-per-node", "#{ppn}" ]
   when "hugemem"
     partition = bc_num_slots.to_i > 1 ? "hugemem-parallel" : "hugemem"
-    slurm_args = [ "--nodes", "#{nodes}", "--ntasks-per-node", "#{ppn}", "--partition", partition ]
+    slurm_args = [ "--ntasks-per-node", "#{ppn}", "--partition", partition ]
   when "gpu"
-    slurm_args = [ "--nodes", "#{nodes}", "--ntasks-per-node", "#{ppn}", "--gpus-per-node", "1" ]
+    slurm_args = [ "--ntasks-per-node", "#{ppn}", "--gpus-per-node", "1" ]
   when "any40-core"
-    slurm_args = [ "--nodes", "#{nodes}", "--ntasks-per-node", "#{ppn}", "--contstraint", "48core" ]
+    slurm_args = [ "--ntasks-per-node", "#{ppn}", "--contstraint", "48core" ]
   when "any48-core"
-    slurm_args = [ "--nodes", "#{nodes}", "--ntasks-per-node", "#{ppn}", "--contstraint", "48core" ]
+    slurm_args = [ "--ntasks-per-node", "#{ppn}", "--contstraint", "48core" ]
   when "gpu-48core"
-    slurm_args = [ "--nodes", "#{nodes}", "--ntasks-per-node", "#{ppn}", "--gpus-per-node", "1", "--constraint", "48core" ]
+    slurm_args = [ "--ntasks-per-node", "#{ppn}", "--gpus-per-node", "1", "--constraint", "48core" ]
   when "gpu-40core"
-    slurm_args = [ "--nodes", "#{nodes}", "--ntasks-per-node", "#{ppn}", "--gpus-per-node", "1", "--constraint", "40core" ]
+    slurm_args = [ "--ntasks-per-node", "#{ppn}", "--gpus-per-node", "1", "--constraint", "40core" ]
   else
-    slurm_args = [ "--nodes", "#{nodes}", "--ntasks-per-node", "#{ppn}" ]
+    slurm_args = [ "--ntasks-per-node", "#{ppn}" ]
   end
 %>
 ---
 batch_connect:
   template: vnc
 script:
-  accounting_id: "<%= account %>"
   native:
   <%- slurm_args.each do |arg| %>
     - "<%= arg %>"
