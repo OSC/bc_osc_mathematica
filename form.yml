@@ -4,7 +4,7 @@ cluster:
   - "owens"
 form:
   - auto_accounts
-  - time
+  - bc_num_hours
   - num_cores
   - node_type
 attributes:
