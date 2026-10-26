@@ -17,7 +17,7 @@ export XDG_CACHE_HOME="$(mktemp -d)"
 export $(dbus-launch)
 
 module restore
-module load mathematica/13.2.1
+module load <%= context.auto_modules_mathematica %>
 
 source /etc/os-release
 
