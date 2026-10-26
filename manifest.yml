@@ -4,6 +4,7 @@ category: Interactive Apps
 subcategory: Servers
 role: batch_connect
 description: |
-  This app will launch Mathematic for use in a classroom.
+  This app will launch [Mathematica] on [Pitzer cluster] for use in a classroom.
 
   [Mathematica]: https://www.wolfram.com/mathematica/
+  [Pitzer cluster]: https://www.osc.edu/resources/technical_support/supercomputers/pitzer
